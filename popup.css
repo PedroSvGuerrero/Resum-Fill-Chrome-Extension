@@ -1,0 +1,237 @@
+/* ─── ResuméFill · popup.css ──────────────────────────────────────────────── */
+
+:root {
+  --bg:        #0d0d0f;
+  --surface:   #141416;
+  --border:    #252528;
+  --border2:   #2e2e33;
+  --accent:    #c8f060;       /* sharp lime */
+  --accent2:   #8bdfff;       /* electric blue for secondary */
+  --text:      #e8e8ea;
+  --muted:     #6b6b73;
+  --danger:    #ff5f5f;
+  --radius:    4px;
+  --font-ui:   'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 340px;
+  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+}
+
+/* ─── Shell ──────────────────────────────────────────────────────────────── */
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 540px;
+  border: 1px solid var(--border2);
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 2px 5px;
+  border-radius: 2px;
+}
+
+.logo-text {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 6px 11px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-primary:hover  { opacity: 0.85; }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+
+/* ─── Nav ─────────────────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 11px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.nav-btn svg { flex-shrink: 0; }
+
+.nav-btn:hover {
+  color: var(--text);
+}
+
+.nav-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ─── Form ────────────────────────────────────────────────────────────────── */
+.form-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+
+.form-scroll::-webkit-scrollbar { width: 4px; }
+.form-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.form-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field-input {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 7px 9px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  resize: vertical;
+}
+
+.field-input:focus {
+  border-color: var(--accent2);
+}
+
+.field-input::placeholder {
+  color: var(--border2);
+}
+
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* ─── Toast ───────────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

@@ -1,0 +1,80 @@
+name: Build & Release Extension
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:   # allow manual trigger from GitHub UI
+
+permissions:
+  contents: write      # needed to create releases and upload assets
+
+jobs:
+  build:
+    name: Package Extension
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout ───────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Derive version from manifest.json ──────────────────────────────
+      - name: Read version from manifest
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' src/manifest.json)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "TAG=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+
+      # ── 3. Zip only the extension source (exclude dev files) ───────────────
+      - name: Build extension zip
+        run: |
+          cd src
+          zip -r ../resumefill-v${{ steps.version.outputs.VERSION }}.zip . \
+            --exclude "*.DS_Store" \
+            --exclude "__MACOSX/*" \
+            --exclude "*.map"
+          cd ..
+          echo "Build complete: $(ls -lh resumefill-v${{ steps.version.outputs.VERSION }}.zip)"
+
+      # ── 4. Upload zip as workflow artifact (always available) ──────────────
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: resumefill-v${{ steps.version.outputs.VERSION }}
+          path: resumefill-v${{ steps.version.outputs.VERSION }}.zip
+          retention-days: 30
+
+      # ── 5. Check if a release tag already exists ──────────────────────────
+      - name: Check for existing release tag
+        id: tag_check
+        run: |
+          if git ls-remote --tags origin | grep -q "refs/tags/${{ steps.version.outputs.TAG }}$"; then
+            echo "EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "EXISTS=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ── 6. Create GitHub Release + attach zip (only if tag is new) ─────────
+      - name: Create GitHub Release
+        if: steps.tag_check.outputs.EXISTS == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.TAG }}
+          name: ResuméFill ${{ steps.version.outputs.TAG }}
+          body: |
+            ## ResuméFill ${{ steps.version.outputs.TAG }}
+
+            ### Install
+            1. Download `resumefill-v${{ steps.version.outputs.VERSION }}.zip`
+            2. Unzip it
+            3. Open Chrome → `chrome://extensions` → Developer Mode → Load unpacked
+            4. Select the unzipped folder
+
+            ### What's in this release
+            - Auto-built from `main` on commit `${{ github.sha }}`
+          files: resumefill-v${{ steps.version.outputs.VERSION }}.zip
+          draft: false
+          prerelease: false

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResuméFill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-mark">RF</span>
+        <span class="logo-text">ResuméFill</span>
+      </div>
+      <button id="btn-fill" class="btn-primary" title="Fill forms on this page">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Fill Page
+      </button>
+    </header>
+
+    <!-- Nav tabs -->
+    <nav id="nav" class="nav"></nav>
+
+    <!-- Form -->
+    <div class="form-scroll">
+      <div id="form-body" class="form-body"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <button id="btn-save" class="btn-secondary">Save Profile</button>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
