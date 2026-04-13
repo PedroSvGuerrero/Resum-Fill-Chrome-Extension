@@ -85,4 +85,4 @@ To add a new field:
 
 ## License
 
-MIT# Resum-Fill-Chrome-Extension
+MIT
